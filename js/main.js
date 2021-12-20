@@ -12,25 +12,26 @@ const descripcionRegalo = $formulario["descripcion-regalo"];
 
 $enviarCarta.onclick = function () {
     validarFormulario();
-
     return false;
 };
 
 function validarFormulario() {
-    const errores = [];
+    const errores = {
+        nombre: validarNombre(nombre.value),
+        ciudad: validarCiudad(ciudad.value),
+        comportamiento: validarComportamiento(comportamiento.value),
+        "descripcion-regalo": validarDescripcionRegalo(descripcionRegalo.value),
+    };
 
-    errores.push(validarNombre(nombre.value));
-    errores.push(validarCiudad(ciudad.value));
-    errores.push(validarComportamiento(comportamiento.value));
-    errores.push(validarDescripcionRegalo(descripcionRegalo.value));
-
-    mostrarErrores(errores);
+    manejarErrores(errores);
 }
 
 function validarNombre(nombre) {
     if (nombre === "") {
         return "Este campo debe tener al menos 1 caracter";
-    } else if (nombre > 50) {
+    } else if (!/^[A-z]+$/.test(nombre)) {
+        return "Este campo debe contener solo letras";
+    } else if (nombre.length > 50) {
         return "Este campo debe tener menos de 50 caracteres";
     }
 }
@@ -50,12 +51,70 @@ function validarComportamiento(comportamiento) {
 function validarDescripcionRegalo(descripcionRegalo) {
     if (descripcionRegalo === "") {
         return "De una descripcion de su regalo";
+    } else if (descripcionRegalo.length > 100) {
+        return "Esta descripcion solo puede contener hasta 100 caracteres";
+    } else if (!/^[A-z0-9,. ]+$/.test(descripcionRegalo)) {
+        return "Esta descripcion solo puede contener letras, numeros, puntos y comas";
     }
 }
 
-function mostrarErrores(errores) {
-    for (const error of errores) {
-        if (error === undefined) continue;
-        console.log(error);
+function manejarErrores(errores) {
+    let hayErrores = false;
+    resetearErrores();
+
+    for (const [llave, entrada] of Object.entries(errores)) {
+        if (entrada !== undefined) {
+            hayErrores = true;
+            marcarError(llave);
+            mostrarError(entrada);
+        } else {
+            desmarcarError(llave);
+        }
     }
+
+    return hayErrores || manejarExito();
+}
+
+function resetearErrores() {
+    const listaErrores = document.querySelectorAll(".elementoError");
+
+    for (const error of listaErrores) {
+        error.remove();
+    }
+}
+
+function mostrarError(descripcion) {
+    const $elementoLista = document.createElement("li");
+    $elementoLista.className = "elementoError";
+    $elementoLista.textContent = descripcion;
+
+    document.querySelector("#errores").appendChild($elementoLista);
+}
+
+function marcarError(nombre) {
+    document.querySelector(`[name=${nombre}]`).className = "error";
+}
+
+function desmarcarError(nombre) {
+    document.querySelector(`[name=${nombre}]`).className = "";
+}
+
+function manejarExito() {
+    ocultarFormulario();
+    mostrarMensajeDeExito();
+    redirigirUsuario();
+}
+
+function ocultarFormulario() {
+    $formulario.className += "oculto";
+}
+
+function mostrarMensajeDeExito() {
+    document.querySelector("#exito").className = "";
+}
+
+function redirigirUsuario() {
+    setTimeout(function () {
+        location.href = "./wishlist.html";
+    }, 5000);
 }
