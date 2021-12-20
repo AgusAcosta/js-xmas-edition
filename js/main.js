@@ -28,11 +28,11 @@ function validarFormulario() {
 
 function validarNombre(nombre) {
     if (nombre === "") {
-        return "Este campo debe tener al menos 1 caracter";
+        return "El nombre debe tener al menos 1 caracter";
     } else if (!/^[A-z]+$/.test(nombre)) {
-        return "Este campo debe contener solo letras";
+        return "El nombre debe contener solo letras";
     } else if (nombre.length > 50) {
-        return "Este campo debe tener menos de 50 caracteres";
+        return "El nombre debe tener menos de 50 caracteres";
     }
 }
 
@@ -50,11 +50,11 @@ function validarComportamiento(comportamiento) {
 
 function validarDescripcionRegalo(descripcionRegalo) {
     if (descripcionRegalo === "") {
-        return "De una descripcion de su regalo";
+        return "La descripcion del regalo debe tener al menos 1 caracter";
     } else if (descripcionRegalo.length > 100) {
-        return "Esta descripcion solo puede contener hasta 100 caracteres";
+        return "La descripcion del regalo solo puede contener hasta 100 caracteres";
     } else if (!/^[A-z0-9,. ]+$/.test(descripcionRegalo)) {
-        return "Esta descripcion solo puede contener letras, numeros, puntos y comas";
+        return "La descripcion del regalo solo puede contener letras, numeros, puntos y comas";
     }
 }
 
