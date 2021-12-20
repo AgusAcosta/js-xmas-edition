@@ -72,7 +72,7 @@ input {
     padding: 0.5em;
 }
 
-input[type='file'] {
+input[type="file"] {
     width: 60%;
     border: none;
     font-family: "Montserrat", sans-serif;
@@ -90,7 +90,7 @@ button {
     text-transform: uppercase;
     border: none;
     border-radius: 2em;
-    background: #20D7C0;
+    background: #20d7c0;
     color: white;
     cursor: pointer;
     transition: all 0.3s ease-in-out;
@@ -98,7 +98,7 @@ button {
 
 button:hover {
     background: black;
-    color: #20D7C0;
+    color: #20d7c0;
 }
 
 @media all and (max-width: 640px) {
@@ -110,12 +110,11 @@ button:hover {
         font-size: 1em;
     }
 
-    input[type=text],
+    input[type="text"],
     textarea {
         width: 50%;
     }
 }
-
 
 #exito {
     margin-top: 30px;
@@ -127,7 +126,10 @@ button:hover {
     font-size: 30px;
 }
 
-
 .oculto {
     display: none;
+}
+
+.invalido {
+    border: 2px solid red;
 }
